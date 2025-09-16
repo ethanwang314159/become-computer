@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>i am computer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --robin-blue: #59C3C3;
+      --anti-flash: #EBEBEB;
+      --ultra-violet: #52489C;
+      --licorice: #150811;
+      --cornell-red: #B3001B;
+      --sea-green: #519872;
+
+      --bg: var(--anti-flash);
+      --card-bg: #ffffff;
+      --glass: rgba(255,255,255,0.6);
+      --radius: 14px;
+      --shadow: 0 10px 30px rgba(21,8,17,0.12);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#f3f7f7);font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:var(--licorice)}
+
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px}
+    .app{
+      width:980px;max-width:96%;border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(245,247,247,0.9));box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:420px 1fr;
+    }
+
+    /* LEFT: controls */
+    .panel{
+      padding:28px 24px; background:linear-gradient(180deg,rgba(89,195,195,0.06),rgba(82,72,156,0.04));
+      border-right:1px solid rgba(21,8,17,0.04);
+      display:flex;flex-direction:column;gap:18px;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:var(--robin-blue);display:grid;place-items:center;color:var(--anti-flash);font-weight:700;box-shadow:0 6px 20px rgba(82,72,156,0.18)}
+    .brand h1{font-size:18px;margin:0}
+    .brand p{margin:0;font-size:12px;color:#333}
+
+    .card{background:var(--card-bg);padding:12px;border-radius:12px;box-shadow:0 6px 18px rgba(21,8,17,0.04);}
+
+    .group{display:flex;flex-direction:column;gap:10px}
+    label.option{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;border:1px solid rgba(21,8,17,0.04)}
+    label.option input{transform:scale(1.1)}
+    .modes{display:flex;gap:8px;flex-wrap:wrap}
+    .modes button{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(21,8,17,0.06);background:transparent;cursor:pointer}
+    .modes button.active{background:var(--cornell-red);color:white;border:none;box-shadow:0 8px 20px rgba(82,72,156,0.12)}
+
+    .numeric{display:flex;gap:8px;align-items:center}
+    .numeric input[type=number]{width:120px;padding:10px;border-radius:8px;border:1px solid rgba(21,8,17,0.06)}
+    .switch{display:flex;align-items:center;gap:12px}
+
+    .start-row{display:flex;gap:10px;margin-top:6px}
+    .btn{padding:12px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+    .btn.primary{background:var(--sea-green);color:white;box-shadow:0 10px 30px rgba(82,72,156,0.12)}
+    .btn.ghost{background:transparent;border:1px solid rgba(21,8,17,0.06)}
+
+    /* RIGHT: test area */
+    .main{padding:28px;display:flex;flex-direction:column;gap:18px}
+    .stage{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px}
+    .question-card{padding:20px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.8),rgba(246,247,249,0.8));border:1px solid rgba(21,8,17,0.03)}
+    .question{font-size:22px;font-weight:700;letter-spacing:0.4px}
+    .meta{font-size:13px;color:#444}
+
+    .input-row{display:flex;gap:12px;align-items:center}
+    .answer{flex:1;padding:12px;border-radius:10px;border:1px solid rgba(21,8,17,0.06);font-size:16px}
+    .small{font-size:13px;color:#666}
+
+    .feedback{height:44px;display:grid;place-items:center;border-radius:10px;padding:8px}
+    .feedback.correct{background:linear-gradient(90deg,var(--sea-green),#4f9e7b);color:white}
+    .feedback.wrong{background:linear-gradient(90deg,var(--cornell-red),#9a0016);color:white}
+
+    .controls{display:flex;gap:10px}
+    .statbar{display:flex;gap:12px;align-items:center;font-weight:600}
+    .chip{background:var(--anti-flash);padding:8px 10px;border-radius:999px;border:1px solid rgba(21,8,17,0.04)}
+
+    footer{font-size:13px;color:#666;margin-top:auto}
+
+    /* responsive */
+    @media (max-width:880px){
+      .app{grid-template-columns:1fr;}
+      .panel{order:2}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="app" role="application" aria-label="i am the computer">
+
+      <aside class="panel">
+        <div class="brand">
+          <div class="logo">:3</div>
+          <div>
+            <h1>hexadecimal speed</h1>
+            <p>bottom text</p>
+          </div>
+        </div>
+
+        <div class="card group" id="setup">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:700">Options</div>
+            <div class="small">right text</div>
+          </div>
+
+          <div>
+            <label class="option"><input type="checkbox" id="chk-lower" checked> a-z (lowercase)</label>
+            <label class="option"><input type="checkbox" id="chk-upper" checked> A-Z (uppercase)</label>
+            <label class="option"><input type="checkbox" id="chk-digits" checked> 0-9 (digits)</label>
+            <label class="option"><input type="checkbox" id="chk-space"> Space</label>
+          </div>
+
+          <div style="margin-top:8px">
+            <div class="small" style="margin-bottom:6px">Mode</div>
+            <div class="modes" role="tablist">
+              <button class="active" data-mode="both">Both</button>
+              <button data-mode="encode">Encode</button>
+              <button data-mode="decode">Decode</button>
+            </div>
+          </div>
+
+          <div style="margin-top:8px">
+            <div class="small">Test type</div>
+            <div class="numeric" style="margin-top:6px">
+              <select id="test-type" style="padding:10px;border-radius:8px;border:1px solid rgba(21,8,17,0.06);">
+                <option value="rounds">Fixed rounds</option>
+                <option value="survival">Survival (until wrong)</option>
+                <option value="timer">Timed (seconds)</option>
+              </select>
+              <input id="rounds" type="number" min="1" value="10" title="Rounds" />
+              <input id="timer" type="number" min="10" value="60" title="Seconds" style="display:none" />
+            </div>
+            <div class="small">Question length: <input id="q-len" type="number" min="1" max="10" value="1" style="width:64px;padding:6px;border-radius:6px;border:1px solid rgba(21,8,17,0.06);margin-left:8px"> chars</div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:12px" class="start-row">
+            <button class="btn primary" id="start">Start test</button>
+            <button class="btn ghost" id="reset">Reset</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:700">Hi Darren</div>
+              <div class="small">You should hire this guy called Henry</div>
+            </div>
+          </div>
+        </div>
+
+        <footer>
+        🦶 why are you looking at feet 🦶
+        </footer>
+      </aside>
+
+      <main class="main">
+        <div class="stage">
+          <div>
+            <div class="question-card">
+              <div class="question" id="question">Select options and start</div>
+              <div class="meta" id="subtext">ok</div>
+            </div>
+
+            <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+              <input id="answer" class="answer" placeholder="Type your answer here..." autocomplete="off" spellcheck="false">
+              <div id="submitBtn" class="btn primary">Submit</div>
+            </div>
+
+            <div style="margin-top:10px;display:flex;gap:10px;align-items:center">
+              <div id="feedback" class="feedback" style="min-width:160px;">Ready</div>
+              <div class="statbar">
+                <div class="chip">Score: <span id="score">0</span></div>
+                <div class="chip">Round: <span id="round">0</span></div>
+                <div class="chip">Correct: <span id="correct">0</span></div>
+                <div class="chip">Wrong: <span id="wrong">0</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-end">
+            <div class="card" style="width:220px;text-align:right">
+              <div style="font-weight:700">Progress</div>
+              <div class="small" id="modeInfo">Mode • Type</div>
+              <div style="height:10px;background:#f2f2f2;border-radius:10px;margin-top:8px;overflow:hidden">
+                <div id="progressBar" style="height:10px;width:0%;background:linear-gradient(90deg,var(--robin-blue),var(--ultra-violet));"></div>
+              </div>
+              <div style="margin-top:8px" class="small">Timer: <span id="displayTimer">ok</span></div>
+            </div>
+
+            <div class="card" style="width:220px;text-align:right">
+              <div style="font-weight:700">Last answer</div>
+              <div id="lastAns" class="small">ok</div>
+              <div style="margin-top:6px" class="small">Correct answer: <span id="lastCorrect">ok</span></div>
+            </div>
+
+            <div style="display:flex;gap:8px">
+              <button id="prevBtn" class="btn ghost">Back</button>
+              <button id="nextBtn" class="btn ghost">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="small">random text</div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const el = id=>document.getElementById(id);
+    const qs = s=>document.querySelector(s);
+
+    const startBtn = el('start');
+    const resetBtn = el('reset');
+    const answerInput = el('answer');
+    const questionEl = el('subtext');
+    const subtext = el('question');
+    const feedback = el('feedback');
+    const scoreEl = el('score');
+    const roundEl = el('round');
+    const correctEl = el('correct');
+    const wrongEl = el('wrong');
+    const progressBar = el('progressBar');
+    const displayTimer = el('displayTimer');
+    const lastAns = el('lastAns');
+    const lastCorrect = el('lastCorrect');
+    const modeInfo = el('modeInfo');
+    const modeButtons = document.querySelectorAll('.modes button');
+    const testType = el('test-type');
+    const roundsIn = el('rounds');
+    const timerIn = el('timer');
+    const qLenIn = el('q-len');
+    const submitBtn = el('submitBtn');
+
+    let session = {
+      active:false,
+      mode:'both', 
+      charset:'',
+      qlen:1,
+      rounds:10,
+      type:'rounds',
+      timeLimit:60,
+      round:0,
+      score:0,
+      correct:0,
+      wrong:0,
+      currentQuestion:null,
+      runningTimer:null,
+      remainingTime:0,
+      history:[]
+    }
+
+    modeButtons.forEach(btn=>btn.addEventListener('click',()=>{
+      modeButtons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      session.mode = btn.dataset.mode;
+    }))
+
+    testType.addEventListener('change',e=>{
+      const val=e.target.value;
+      if(val==='timer') {timerIn.style.display='inline-block'; roundsIn.style.display='none'} else {timerIn.style.display='none'; roundsIn.style.display='inline-block'}
+      session.type=val;
+    })
+
+    function buildCharset(){
+      let s='';
+      if(document.getElementById('chk-lower').checked) s+= 'abcdefghijklmnopqrstuvwxyz';
+      if(document.getElementById('chk-upper').checked) s+= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      if(document.getElementById('chk-digits').checked) s+= '0123456789';
+      if(document.getElementById('chk-space').checked) s+= ' ';
+      return s;
+    }
+
+    function toHex(str){
+      const utf8 = new TextEncoder().encode(str);
+      return Array.from(utf8).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+
+    function fromHex(hex){
+      try{
+        if(hex.length%2===1) return null;
+        const bytes = new Uint8Array(hex.match(/.{1,2}/g).map(h=>parseInt(h,16)));
+        return new TextDecoder().decode(bytes);
+      }catch(e){return null}
+    }
+
+    function randomString(charset,len){
+      if(!charset) return '';
+      let out='';
+      for(let i=0;i<len;i++) out+= charset[Math.floor(Math.random()*charset.length)];
+      return out;
+    }
+
+    function makeQuestion(){
+      const charset = buildCharset();
+      session.charset = charset;
+      session.qlen = parseInt(qLenIn.value)||1;
+      const text = randomString(charset, session.qlen);
+      const hex = toHex(text);
+      let direction;
+      if(session.mode==='both') direction = Math.random()<0.5? 'encode' : 'decode';
+      else direction = session.mode;
+      if(direction==='encode'){
+        return {type:'encode', prompt:text, answer:hex}
+      }else{
+        return {type:'decode', prompt:hex, answer:text}
+      }
+    }
+
+    function startSession(){
+      const charset = buildCharset();
+      if(!charset){ alert('Please select at least one character set.'); return }
+      session.active=true;
+      session.round=0; session.score=0; session.correct=0; session.wrong=0; session.history=[];
+      session.qlen = parseInt(qLenIn.value)||4;
+      session.rounds = parseInt(roundsIn.value)||10;
+      session.timeLimit = parseInt(timerIn.value)||60;
+      session.type = testType.value;
+      nextQuestion();
+      if(session.type==='timer') startTimer(session.timeLimit);
+      updateUI();
+      answerInput.focus();
+    }
+
+    function endSession(reason){
+      session.active=false;
+      clearInterval(session.runningTimer);
+      feedback.className='feedback';
+      questionEl.textContent = 'Session ended, ' + (reason||'Finished');
+      modeInfo.textContent = `Score: ${session.score} • Correct ${session.correct} • Wrong ${session.wrong}`;
+      displayTimer.textContent='ok';
+      updateUI();
+    }
+
+    function startTimer(seconds){
+      clearInterval(session.runningTimer);
+      session.remainingTime = seconds;
+      displayTimer.textContent = formatTime(session.remainingTime);
+      session.runningTimer = setInterval(()=>{
+        session.remainingTime--;
+        displayTimer.textContent = formatTime(session.remainingTime);
+        if(session.remainingTime<=0){
+          clearInterval(session.runningTimer);
+          endSession('Time up');
+        }
+      },1000)
+    }
+    function formatTime(s){
+      if(s<0) s=0; const mm=Math.floor(s/60); const ss=s%60; return `${mm}:${ss.toString().padStart(2,'0')}`;
+    }
+
+    function updateUI(){
+      scoreEl.textContent=session.score;
+      roundEl.textContent=session.round;
+      correctEl.textContent=session.correct;
+      wrongEl.textContent=session.wrong;
+      if(session.type==='rounds' && session.rounds>0){
+        progressBar.style.width = Math.min(100,(session.round/session.rounds)*100)+'%';
+      }
+      modeInfo.textContent = `${session.mode.toUpperCase()} • ${session.type}`;
+    }
+
+    function showQuestion(q){
+      if(!q) return;
+      if(q.type==='encode'){
+        questionEl.textContent = 'Encode to HEX:';
+        subtext.textContent = q.prompt;
+      }else{
+        questionEl.textContent = 'Decode from HEX';
+        subtext.textContent = q.prompt;
+      }
+      answerInput.value='';
+      feedback.textContent='Answer and press Enter';
+      feedback.className='feedback';
+      session.currentQuestion=q;
+      updateUI();
+    }
+
+    function submitAnswer(){
+  if(!session.active) return;
+  var given = answerInput.value.trim();
+  if (given === "") {
+    given = " "
+  }
+  const q = session.currentQuestion;
+  if(!q) return;
+
+  if(q.attempts === undefined) q.attempts = 0;
+
+  let ok=false;
+  if(q.type==='encode'){
+    ok = given.toLowerCase() === q.answer.toLowerCase();
+  }else{
+    ok = given === q.answer;
+  }
+
+  if(ok){
+    session.correct++;
+    const base = 10;
+    const penalty = q.attempts * 3; 
+    const points = Math.max(1, base - penalty);
+    session.score += points;
+
+    feedback.className='feedback correct';
+    feedback.textContent=`Correct! +${points} points`;
+    lastAns.textContent = given || 'ok';
+    lastCorrect.textContent = q.answer;
+
+    session.history.push({q, given, ok, t:Date.now(), points});
+    session.round++;
+    updateUI();
+
+    if(session.type==='rounds' && session.rounds>0 && session.round>=session.rounds){ 
+      endSession('Completed rounds'); 
+      return;
+    }
+    // next question
+    setTimeout(()=>{ if(session.active) nextQuestion(); }, 400);
+
+  }else{
+    session.wrong++;
+    q.attempts++;
+    feedback.className='feedback wrong';
+    feedback.textContent='Wrong, try again';
+    lastAns.textContent = given || 'ok';
+    lastCorrect.textContent = q.answer;
+
+    session.history.push({q, given, ok, t:Date.now(), points:0});
+    updateUI();
+
+    if(session.type==='survival'){ 
+      endSession('Wrong answer'); 
+      return;
+    }
+    answerInput.value='';
+    answerInput.focus();
+  }
+}
+
+
+    function nextQuestion(){
+      if(!session.active) return;
+      const q = makeQuestion();
+      session.currentQuestion = q;
+      showQuestion(q);
+    }
+
+    startBtn.addEventListener('click', startSession);
+    resetBtn.addEventListener('click', ()=>{
+      clearInterval(session.runningTimer);
+      session.active=false; session.round=0; session.score=0; session.correct=0; session.wrong=0; session.history=[];
+      questionEl.textContent='Select options and start'; subtext.textContent='ok'; feedback.textContent='Ready'; feedback.className='feedback'; displayTimer.textContent='ok'; updateUI();
+    });
+
+    submitBtn.addEventListener('click', submitAnswer);
+    answerInput.addEventListener('keydown', e=>{
+      if(e.key==='Enter') submitAnswer();
+    });
+
+    el('prevBtn').addEventListener('click', ()=>{
+      if(!session.history.length) return; const last = session.history.pop();
+      if(last.ok){ session.correct--; session.score-=10 } else { session.wrong--; session.score+=5 }
+      session.round = Math.max(0, session.round-1); updateUI();
+      feedback.className='feedback'; feedback.textContent='Reverted last';
+    });
+    el('nextBtn').addEventListener('click', ()=>{ if(!session.active) return; nextQuestion(); });
+
+    answerInput.addEventListener('focus', ()=>{answerInput.select()});
+
+    answerInput.addEventListener('paste', e=>{
+      const text = (e.clipboardData||window.clipboardData).getData('text');
+      if(/[0-9a-fA-F\s:]+/.test(text) && text.trim().length>0){
+        e.preventDefault(); const cleaned = text.replace(/[^0-9a-fA-F]/g,''); document.execCommand('insertText', false, cleaned);
+      }
+    });
+
+    subtext.textContent='Choose options then click Start';
+    displayTimer.textContent='ok';
+
+    const origMakeQuestion = makeQuestion;
+  </script>
+</body>
+</html>
